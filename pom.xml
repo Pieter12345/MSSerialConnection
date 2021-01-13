@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>commandhelper</artifactId>
-			<version>3.3.2-SNAPSHOT</version>
+			<version>3.3.4-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
 		

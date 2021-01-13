@@ -5,17 +5,17 @@ import java.util.TreeMap;
 
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.annotations.api;
-import com.laytonsmith.core.CHVersion;
+import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.constructs.CArray;
 import com.laytonsmith.core.constructs.CByteArray;
 import com.laytonsmith.core.constructs.CString;
-import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.events.AbstractEvent;
 import com.laytonsmith.core.events.BindableEvent;
 import com.laytonsmith.core.events.Driver;
 import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
+import com.laytonsmith.core.natives.interfaces.Mixed;
 
 public class Events {
 	
@@ -44,8 +44,8 @@ public class Events {
 		}
 		
 		@Override
-		public Map<String, Construct> evaluate(BindableEvent event) throws EventException {
-			Map<String, Construct> map = new TreeMap<>();
+		public Map<String, Mixed> evaluate(BindableEvent event) throws EventException {
+			Map<String, Mixed> map = new TreeMap<>();
 			if(event instanceof SerialDataEvent) {
 				map.put("data", CByteArray.wrap(((SerialDataEvent) event).getData(), null));
 				map.put("message", new CString(((SerialDataEvent) event).getMessage(), null));
@@ -56,18 +56,18 @@ public class Events {
 		}
 		
 		@Override
-		public boolean matches(Map<String, Construct> arg0, BindableEvent arg1) throws PrefilterNonMatchException {
+		public boolean matches(Map<String, Mixed> arg0, BindableEvent arg1) throws PrefilterNonMatchException {
 			return true;
 		}
 		
 		@Override
-		public boolean modifyEvent(String arg0, Construct arg1, BindableEvent arg2) {
+		public boolean modifyEvent(String arg0, Mixed arg1, BindableEvent arg2) {
 			return false;
 		}
 		
 		@Override
 		public Version since() {
-			return CHVersion.V3_3_1;
+			return MSVersion.V3_3_1;
 		}
     }
 }
