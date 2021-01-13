@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>io.github.pieter12345.charduino</groupId>
+	<artifactId>CHArduino</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
+	<name>CHArduino</name>
+	<description>A CommandHelper extension that creates the possibility to communicate with an Arduino using CommandHelper</description>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<build>
+		<plugins>
+			
+			<!-- Compile plugin (required for compilation) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<showDeprecation>true</showDeprecation>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			
+			<!-- Jar creation plugin (creates a jar without dependencies) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<!--<mainClass>io.github.pieter12345.charduino.CHArduino</mainClass>-->
+						</manifest>
+						<manifestEntries>
+							<Built-By>Anonymous</Built-By>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			
+			<!-- Shade plugin (include libraries in jar) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<id>ShadedBundle</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<shadedArtifactAttached>false</shadedArtifactAttached>
+							<shadedClassifierName>Bundle</shadedClassifierName>
+							<minimizeJar>false</minimizeJar>
+							<artifactSet>
+								<includes>
+									<include>io.github.pieter12345.arduinoconnection:ArduinoConnection:jar:*</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+	</build>
+	<licenses>
+		<license>
+			<name>No License</name>
+		</license>
+	</licenses>
+	<dependencies>
+		
+		<!-- CommandHelper -->
+		<dependency>
+			<groupId>com.sk89q</groupId>
+			<artifactId>commandhelper</artifactId>
+			<version>3.3.2-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		
+		<!-- ArduinoConnection -->
+		<dependency>
+			<groupId>io.github.pieter12345.arduinoconnection</groupId>
+			<artifactId>ArduinoConnection</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+	</dependencies>
+</project>
