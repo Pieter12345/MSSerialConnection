@@ -1,4 +1,4 @@
-package io.github.pieter12345.charduino;
+package io.github.pieter12345.msserialconnection;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -20,16 +20,17 @@ import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
 public class Events {
 	
 	@api
-	public static class arduino_data_received extends AbstractEvent {
+	public static class serial_data_received extends AbstractEvent {
 		
 		@Override
 		public String getName() {
-			return "arduino_data_received";
+			return "serial_data_received";
 		}
 		
 		@Override
 		public String docs() {
-			return "Fired when input data from an Arduino is received. Format: {data: The raw received data, message: The received message} ";
+			return "Fired when input data from an serial connection is received."
+					+ " Format: {data: The raw received data, message: The received message} ";
 		}
 		
 		@Override
@@ -45,11 +46,11 @@ public class Events {
 		@Override
 		public Map<String, Construct> evaluate(BindableEvent event) throws EventException {
 			Map<String, Construct> map = new TreeMap<>();
-			if(event instanceof ArduinoEvent) {
-				map.put("data", CByteArray.wrap(((ArduinoEvent) event).getData(), null));
-				map.put("message", new CString(((ArduinoEvent) event).getMessage(), null));
+			if(event instanceof SerialDataEvent) {
+				map.put("data", CByteArray.wrap(((SerialDataEvent) event).getData(), null));
+				map.put("message", new CString(((SerialDataEvent) event).getMessage(), null));
 			} else {
-				throw new EventException("Cannot convert event to ArduinoEvent.");
+				throw new EventException("Cannot convert event to " + SerialDataEvent.class.getSimpleName() + ".");
 			}
 			return map;
 		}

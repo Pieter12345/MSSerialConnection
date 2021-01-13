@@ -1,4 +1,4 @@
-package io.github.pieter12345.charduino;
+package io.github.pieter12345.msserialconnection;
 
 import java.io.IOException;
 
@@ -24,15 +24,15 @@ import io.github.pieter12345.arduinoconnection.UnsupportedException;
 public class ArduinoFunctions {
 	
 	public static String docs() {
-		return "Provides an api to communicate with Arduino's through comport/USB.";
+		return "Provides an api to communicate with serial devices through comport/USB.";
 	}
 	
 	@api
-	public static class arduino_send extends AbstractFunction {
+	public static class serial_send extends AbstractFunction {
 		
 		@Override
 		public String getName() {
-			return "arduino_send";
+			return "serial_send";
 		}
 		
 		@Override
@@ -42,7 +42,8 @@ public class ArduinoFunctions {
 		
 		@Override
 		public String docs() {
-			return "boolean {byte_array | string} Sends the given data to the Arduino. Returns whether the data has been sent successfully or not.";
+			return "boolean {byte_array | string} Sends the given data to the serial connection."
+					+ " Returns whether the data has been sent successfully or not.";
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -56,15 +57,15 @@ public class ArduinoFunctions {
 			if(args.length != 1) {
 				throw new CREFormatException("Wrong amount of arguments passed to " + this.getName(), t);
 			}
-			if(CHArduino.arduinoConn == null) {
+			if(MSSerialConnection.arduinoConn == null) {
 				throw new CREPluginInternalException(this.getName() + " requires an Arduino to be connected.", t);
 			}
 			Construct c = args[0];
 			boolean success;
 			if(c instanceof CByteArray) {
-				success = CHArduino.arduinoConn.send(((CByteArray) c).asByteArrayCopy());
+				success = MSSerialConnection.arduinoConn.send(((CByteArray) c).asByteArrayCopy());
 			} else {
-				success = CHArduino.arduinoConn.send(c.val());
+				success = MSSerialConnection.arduinoConn.send(c.val());
 			}
 			return CBoolean.GenerateCBoolean(success, t);
 		}
@@ -86,11 +87,11 @@ public class ArduinoFunctions {
 	}
 	
 	@api
-	public static class arduino_reconnect extends AbstractFunction{
+	public static class serial_reconnect extends AbstractFunction{
 		
 		@Override
 		public String getName() {
-			return "arduino_reconnect";
+			return "serial_reconnect";
 		}
 		
 		@Override
@@ -112,7 +113,7 @@ public class ArduinoFunctions {
 		@Override
 		public Construct exec(Target t, Environment env, Construct... args) throws CancelCommandException, ConfigRuntimeException {
 			try {
-				CHArduino.reconnect();
+				MSSerialConnection.reconnect();
 				return CBoolean.TRUE;
 			} catch (ArduinoConnectionException | UnsupportedException | IOException e) {
 				return CBoolean.FALSE;
@@ -136,11 +137,11 @@ public class ArduinoFunctions {
 	}
 	
 	@api
-	public static class arduino_disconnect extends AbstractFunction{
+	public static class serial_disconnect extends AbstractFunction{
 		
 		@Override
 		public String getName() {
-			return "arduino_disconnect";
+			return "serial_disconnect";
 		}
 		
 		@Override
@@ -161,7 +162,7 @@ public class ArduinoFunctions {
 		
 		@Override
 		public Construct exec(Target t, Environment env, Construct... args) throws CancelCommandException, ConfigRuntimeException {
-			CHArduino.disconnect();
+			MSSerialConnection.disconnect();
 			return CVoid.VOID;
 		}
 		

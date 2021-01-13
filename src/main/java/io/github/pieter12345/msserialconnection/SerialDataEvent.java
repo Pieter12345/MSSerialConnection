@@ -1,21 +1,21 @@
-package io.github.pieter12345.charduino;
+package io.github.pieter12345.msserialconnection;
 
 import com.laytonsmith.core.events.BindableEvent;
 
-public class ArduinoEvent implements BindableEvent {
+public class SerialDataEvent implements BindableEvent {
 	
 	// Variables & Constants.
 	private String message;
 	private byte[] data;
 	
 	// Constructor.
-	public ArduinoEvent(String message) {
+	public SerialDataEvent(String message) {
 		this.message = message;
 		this.data = message.getBytes();
 	}
 	
 	// Constructor.
-	public ArduinoEvent(byte[] data) {
+	public SerialDataEvent(byte[] data) {
 		this.message = new String(data);
 		this.data = data.clone();
 	}
