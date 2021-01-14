@@ -21,8 +21,13 @@ import com.laytonsmith.core.natives.interfaces.Mixed;
  * Container class for serial connection MethodScript events.
  * @author P.J.S. Kools
  */
-@SuppressWarnings("checkstyle:TypeName") // By convention, classes are named after the MS events that they represent.
+//By convention, classes are named after the MS events that they represent.
+@SuppressWarnings({"checkstyle:TypeName", "checkstyle:HideUtilityClassConstructor"})
 public class SerialConnectionEvents {
+	
+	public static String docs() {
+		return "Contains events related to serial connections.";
+	}
 	
 	@api
 	public static class serial_data_received extends AbstractEvent {
@@ -34,8 +39,8 @@ public class SerialConnectionEvents {
 		
 		@Override
 		public String docs() {
-			return "Fired when data is received through a serial connection."
-					+ " Format: {serialport: The serial port name (string), data: The raw received data (byte_array)}.";
+			return "{} Fired when data is received through a serial connection."
+					+ " {string serialport: The serial port name | byte_array data: The raw received data} {}";
 		}
 		
 		@Override

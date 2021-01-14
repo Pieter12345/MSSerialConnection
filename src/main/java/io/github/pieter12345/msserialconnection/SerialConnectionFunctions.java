@@ -49,7 +49,7 @@ public class SerialConnectionFunctions {
 		
 		@Override
 		public String docs() {
-			return "array {} Returns an array containing all serial in the system.";
+			return "array {} Returns an array containing all serial ports in the system.";
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -80,7 +80,7 @@ public class SerialConnectionFunctions {
 		public String docs() {
 			return "void {string portName, int baudRate, int numDataBits, int numStopBits, string parity,"
 					+ " boolean setRTS, boolean setDTR} Opens a serial connection to the given serial port using the"
-					+ "given parameters."
+					+ " given parameters."
 					+ " parity has to be one of: PARITY_NONE, PARITY_ODD, PARITY_EVEN, PARITY_MARK and PARITY_SPACE."
 					+ " Many common microprocessors work with settings: numDataBits = 8, numStopBits = 1,"
 					+ " parity = PARITY_NONE, setRTS = true and setDTR = true. Look up the specifications of your"
@@ -233,7 +233,7 @@ public class SerialConnectionFunctions {
 		@Override
 		public String docs() {
 			return "void {string portName} Disconnects from the given serial port."
-					+ "Throws an IllegalStateException when the given serial port was not open.";
+					+ " Throws an IllegalStateException when the given serial port was not open.";
 		}
 		
 		@SuppressWarnings("unchecked")
