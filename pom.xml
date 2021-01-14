@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>io.github.pieter12345.charduino</groupId>
-	<artifactId>CHArduino</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
-	<name>CHArduino</name>
-	<description>A CommandHelper extension that creates the possibility to communicate with an Arduino using CommandHelper</description>
+	<groupId>io.github.pieter12345.msserialconnection</groupId>
+	<artifactId>MSSerialConnection</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>MSSerialConnection</name>
+	<description>Provides serial connection API for the MethodScript programming language</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -33,7 +33,7 @@
 						<addMavenDescriptor>false</addMavenDescriptor>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<!--<mainClass>io.github.pieter12345.charduino.CHArduino</mainClass>-->
+							<!--<mainClass>io.github.pieter12345.msserialconnection.MSSerialConnection</mainClass>-->
 						</manifest>
 						<manifestEntries>
 							<Built-By>Anonymous</Built-By>
