@@ -60,7 +60,9 @@
 							<minimizeJar>false</minimizeJar>
 							<artifactSet>
 								<includes>
-									<include>io.github.pieter12345.arduinoconnection:ArduinoConnection:jar:*</include>
+									<include>io.github.java-native:jssc:jar:*</include>
+									<include>org.scijava:native-lib-loader:jar:*</include>
+									<include>org.slf4j:slf4j-api:jar:*</include>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -85,11 +87,11 @@
 			<type>jar</type>
 		</dependency>
 		
-		<!-- ArduinoConnection -->
+		<!-- Java Simple Serial Connection library -->
 		<dependency>
-			<groupId>io.github.pieter12345.arduinoconnection</groupId>
-			<artifactId>ArduinoConnection</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>io.github.java-native</groupId>
+			<artifactId>jssc</artifactId>
+			<version>2.9.2</version>
 		</dependency>
 		
 	</dependencies>

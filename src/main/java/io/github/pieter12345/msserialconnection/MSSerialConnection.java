@@ -1,68 +1,44 @@
 package io.github.pieter12345.msserialconnection;
 
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.core.extensions.AbstractExtension;
 import com.laytonsmith.core.extensions.MSExtension;
 
-import io.github.pieter12345.arduinoconnection.ArduinoConnection;
-import io.github.pieter12345.arduinoconnection.ArduinoConnectionException;
-import io.github.pieter12345.arduinoconnection.UnsupportedException;
+import jssc.SerialPort;
+import jssc.SerialPortException;
 
 /**
- * MSSerialData class.
- * @author Pieter12345 / Woesh0007
- * @since 14-09-2015
+ * Main class for the {@link MSSerialConnection} MethodScript extension.
+ * @author P.J.S. Kools
  */
 @MSExtension("MSSerialConnection")
 public class MSSerialConnection extends AbstractExtension {
-	public static ArduinoConnection arduinoConn = null;
-	private static SerialDataEventListener listener = new SerialDataEventListener();
 	
-	@Override
-	public void onStartup() {
-		try {
-			System.out.println("Loading " + MSSerialConnection.class.getSimpleName() + " " + getVersion() + ".");
-			arduinoConn = new ArduinoConnection(9600);
-			arduinoConn.addArduinoConnectionListener(listener);
-		} catch (ArduinoConnectionException | UnsupportedException | IOException e) { }
-		System.out.println(MSSerialConnection.class.getSimpleName() + " " + getVersion()
-				+ " loaded. The arduino is " + (arduinoConn == null ? "NOT " : "") + "connected.");
-	}
+	/**
+	 * Contains all presumed open serial connections, having their serial port name as key.
+	 */
+	public static final Map<String, SerialPort> SERIAL_CONNECTIONS = new HashMap<>();
 	
 	@Override
 	public void onShutdown() {
-		if(arduinoConn != null) {
-			arduinoConn.removeArduinoConnectionListener(listener);
-			arduinoConn.close();
-			
-			// Make sure the RXTXSerial library unloads (by destroying the class and therefor its classloader).
-			arduinoConn = null;
-			System.gc();
+		
+		// Close and remove all serial connections.
+		for(SerialPort serialPort : SERIAL_CONNECTIONS.values()) {
+			try {
+				serialPort.closePort();
+			} catch (SerialPortException e) {
+				// Ignore.
+			}
 		}
-		System.out.println("CHArduino " + getVersion() + " unloaded.");
+		SERIAL_CONNECTIONS.clear();
 	}
 	
 	@Override
 	public Version getVersion() {
-		return new SimpleVersion(0, 0, 1);
-	}
-	
-	public static void reconnect() throws ArduinoConnectionException, UnsupportedException, IOException {
-		if(arduinoConn != null) {
-			arduinoConn.removeArduinoConnectionListener(listener);
-			arduinoConn.close();
-		}
-		arduinoConn = new ArduinoConnection(9600);
-		arduinoConn.addArduinoConnectionListener(listener);
-	}
-	
-	public static void disconnect() {
-		if(arduinoConn != null) {
-			arduinoConn.removeArduinoConnectionListener(listener);
-			arduinoConn.close();
-		}
+		return new SimpleVersion(1, 0, 0);
 	}
 }

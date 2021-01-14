@@ -17,7 +17,11 @@ import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
 import com.laytonsmith.core.natives.interfaces.Mixed;
 
-public class Events {
+/**
+ * Container class for serial connection MethodScript events.
+ * @author P.J.S. Kools
+ */
+public class SerialConnectionEvents {
 	
 	@api
 	public static class serial_data_received extends AbstractEvent {
@@ -29,12 +33,12 @@ public class Events {
 		
 		@Override
 		public String docs() {
-			return "Fired when input data from an serial connection is received."
-					+ " Format: {data: The raw received data, message: The received message} ";
+			return "Fired when data is received through a serial connection."
+					+ " Format: {serialport: The serial port name (string), data: The raw received data (byte_array)}.";
 		}
 		
 		@Override
-		public BindableEvent convert(CArray arg0, Target arg1) {
+		public BindableEvent convert(CArray manualObject, Target t) {
 			return null;
 		}
 		
@@ -46,22 +50,24 @@ public class Events {
 		@Override
 		public Map<String, Mixed> evaluate(BindableEvent event) throws EventException {
 			Map<String, Mixed> map = new TreeMap<>();
-			if(event instanceof SerialDataEvent) {
-				map.put("data", CByteArray.wrap(((SerialDataEvent) event).getData(), null));
-				map.put("message", new CString(((SerialDataEvent) event).getMessage(), null));
+			if(event instanceof SerialDataReceivedEvent) {
+				SerialDataReceivedEvent serialDataReceivedEvent = (SerialDataReceivedEvent) event;
+				map.put("serialport", new CString(serialDataReceivedEvent.getSerialPort().getPortName(), null));
+				map.put("data", CByteArray.wrap(serialDataReceivedEvent.getData(), null));
 			} else {
-				throw new EventException("Cannot convert event to " + SerialDataEvent.class.getSimpleName() + ".");
+				throw new EventException(
+						"Cannot convert event to " + SerialDataReceivedEvent.class.getSimpleName() + ".");
 			}
 			return map;
 		}
 		
 		@Override
-		public boolean matches(Map<String, Mixed> arg0, BindableEvent arg1) throws PrefilterNonMatchException {
+		public boolean matches(Map<String, Mixed> prefilter, BindableEvent event) throws PrefilterNonMatchException {
 			return true;
 		}
 		
 		@Override
-		public boolean modifyEvent(String arg0, Mixed arg1, BindableEvent arg2) {
+		public boolean modifyEvent(String key, Mixed value, BindableEvent event) {
 			return false;
 		}
 		
