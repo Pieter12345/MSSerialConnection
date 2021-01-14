@@ -256,7 +256,7 @@ public class SerialConnectionFunctions {
 			try {
 				serialPort.closePort(); // Ignore result, if it can't be closed, then it probably is already.
 			} catch (SerialPortException e) {
-				throw new Error(e); // Never thrown since the serial port was opened and never closed.
+				// Ignore result, if it can't be closed, then it probably is already.
 			}
 			return CVoid.VOID;
 		}
