@@ -21,6 +21,7 @@ import com.laytonsmith.core.natives.interfaces.Mixed;
  * Container class for serial connection MethodScript events.
  * @author P.J.S. Kools
  */
+@SuppressWarnings("checkstyle:TypeName") // By convention, classes are named after the MS events that they represent.
 public class SerialConnectionEvents {
 	
 	@api
@@ -75,5 +76,5 @@ public class SerialConnectionEvents {
 		public Version since() {
 			return MSVersion.V3_3_1;
 		}
-    }
+	}
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.2//EN" "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+	
+	<!-- Allow star imports in "...Test.java" files -->
+	<suppress checks="AvoidStarImport" files=".*Test\.java$"/>
+	
+	<!-- Ignore type name check for the "SerialConnectionFunctions" class since function classes use a different format -->
+	<suppress checks="TypeName" files="io[\\/]github[\\/]pieter12345[\\/]msserialconnection[\\/]SerialConnectionFunctions\.java$"/>
+	
+	<!-- Ignore type name check for the "SerialConnectionEvents" class since event classes use a different format -->
+	<suppress checks="TypeName" files="io[\\/]github[\\/]pieter12345[\\/]msserialconnection[\\/]SerialConnectionEvents\.java$"/>
+	
+</suppressions>

@@ -30,6 +30,8 @@ import jssc.SerialPortList;
  * Container class for serial connection MethodScript functions.
  * @author P.J.S. Kools
  */
+// By convention, classes are named after the MS functions that they represent.
+@SuppressWarnings({"checkstyle:TypeName", "checkstyle:HideUtilityClassConstructor"})
 public class SerialConnectionFunctions {
 	
 	public static String docs() {
@@ -308,7 +310,7 @@ public class SerialConnectionFunctions {
 		}
 	}
 	
-	public static abstract class SerialConnectionFunction extends AbstractFunction {
+	public abstract static class SerialConnectionFunction extends AbstractFunction {
 		
 		@Override
 		public String getName() {

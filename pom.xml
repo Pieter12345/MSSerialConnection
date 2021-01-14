@@ -1,6 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>io.github.pieter12345.msserialconnection</groupId>
+	<groupId>io.github.pieter12345</groupId>
 	<artifactId>MSSerialConnection</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>MSSerialConnection</name>
@@ -68,6 +69,40 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			
+			<!-- Checkstyle plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>test</phase>
+						<configuration>
+							<sourceDirectories>${project.compileSourceRoots}</sourceDirectories>
+							<testSourceDirectories>${project.testCompileSourceRoots}</testSourceDirectories>
+							<includeTestSourceDirectory>true</includeTestSourceDirectory>
+							<configLocation>${basedir}/checkstyle.xml</configLocation>
+							<propertyExpansion>config_loc=${basedir}</propertyExpansion>
+							<encoding>UTF-8</encoding>
+							<consoleOutput>true</consoleOutput>
+							<failsOnError>true</failsOnError>
+							<linkXRef>false</linkXRef>
+						</configuration>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>8.29</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			
 		</plugins>
