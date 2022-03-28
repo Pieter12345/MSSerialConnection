@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.pieter12345</groupId>
 	<artifactId>MSSerialConnection</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>MSSerialConnection</name>
 	<description>Provides serial connection API for the MethodScript programming language</description>
 	<developers>
@@ -29,11 +29,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<version>3.10.1</version>
 				<configuration>
 					<showDeprecation>true</showDeprecation>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>16</release>
 				</configuration>
 			</plugin>
 			
@@ -41,7 +40,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.2.2</version>
 				<configuration>
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
@@ -60,7 +59,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>1.4</version>
+				<version>3.2.4</version>
 				<executions>
 					<execution>
 						<id>ShadedBundle</id>
@@ -69,6 +68,7 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
 							<shadedArtifactAttached>false</shadedArtifactAttached>
 							<shadedClassifierName>Bundle</shadedClassifierName>
 							<minimizeJar>false</minimizeJar>
@@ -88,7 +88,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.1.2</version>
 				<executions>
 					<execution>
 						<id>checkstyle</id>
@@ -131,7 +131,8 @@
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>commandhelper</artifactId>
-			<version>3.3.4-SNAPSHOT</version>
+			<version>3.3.5-SNAPSHOT</version>
+			<classifier>full</classifier>
 			<type>jar</type>
 		</dependency>
 		
@@ -143,4 +144,13 @@
 		</dependency>
 		
 	</dependencies>
+	<repositories>
+		
+		<!-- CommandHelper repository -->
+		<repository>
+			<id>enginehub-maven</id>
+			<url>https://maven.enginehub.org/repo</url>
+		</repository>
+		
+	</repositories>
 </project>
