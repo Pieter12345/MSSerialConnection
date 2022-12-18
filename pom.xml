@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.pieter12345</groupId>
 	<artifactId>MSSerialConnection</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>MSSerialConnection</name>
 	<description>Provides serial connection API for the MethodScript programming language</description>
 	<developers>
@@ -77,6 +77,7 @@
 									<include>io.github.java-native:jssc:jar:*</include>
 									<include>org.scijava:native-lib-loader:jar:*</include>
 									<include>org.slf4j:slf4j-api:jar:*</include>
+									<include>org.slf4j:slf4j-nop:jar:*</include>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -141,6 +142,13 @@
 			<groupId>io.github.java-native</groupId>
 			<artifactId>jssc</artifactId>
 			<version>2.9.4</version>
+		</dependency>
+		
+		<!-- Required to hide a runtime console warning about a missing logger implementation in JSSC -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-nop</artifactId>
+			<version>2.0.6</version>
 		</dependency>
 		
 	</dependencies>
