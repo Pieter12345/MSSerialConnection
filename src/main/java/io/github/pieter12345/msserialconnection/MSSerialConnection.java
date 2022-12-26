@@ -39,6 +39,6 @@ public class MSSerialConnection extends AbstractExtension {
 	
 	@Override
 	public Version getVersion() {
-		return new SimpleVersion(1, 0, 2);
+		return new SimpleVersion(2, 0, 0);
 	}
 }

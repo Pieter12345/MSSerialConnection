@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.pieter12345</groupId>
 	<artifactId>MSSerialConnection</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<name>MSSerialConnection</name>
 	<description>Provides serial connection API for the MethodScript programming language</description>
 	<developers>

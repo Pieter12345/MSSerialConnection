@@ -3,11 +3,11 @@ package io.github.pieter12345.msserialconnection;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.annotations.api;
-import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.constructs.CArray;
-import com.laytonsmith.core.constructs.CByteArray;
+import com.laytonsmith.core.constructs.CInt;
 import com.laytonsmith.core.constructs.CString;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.events.AbstractEvent;
@@ -30,11 +30,11 @@ public class SerialConnectionEvents {
 	}
 	
 	@api
-	public static class serial_data_received extends AbstractEvent {
+	public static class serial_data_available extends AbstractEvent {
 		
 		@Override
 		public String getName() {
-			return "serial_data_received";
+			return "serial_data_available";
 		}
 		
 		@Override
@@ -56,13 +56,13 @@ public class SerialConnectionEvents {
 		@Override
 		public Map<String, Mixed> evaluate(BindableEvent event) throws EventException {
 			Map<String, Mixed> map = new TreeMap<>();
-			if(event instanceof SerialDataReceivedEvent) {
-				SerialDataReceivedEvent serialDataReceivedEvent = (SerialDataReceivedEvent) event;
+			if(event instanceof SerialDataAvailableEvent) {
+				SerialDataAvailableEvent serialDataReceivedEvent = (SerialDataAvailableEvent) event;
 				map.put("serialport", new CString(serialDataReceivedEvent.getSerialPort().getPortName(), null));
-				map.put("data", CByteArray.wrap(serialDataReceivedEvent.getData(), null));
+				map.put("rxBufferByteCount", new CInt(serialDataReceivedEvent.getRXBufferByteCount(), null));
 			} else {
 				throw new EventException(
-						"Cannot convert event to " + SerialDataReceivedEvent.class.getSimpleName() + ".");
+						"Cannot convert event to " + SerialDataAvailableEvent.class.getSimpleName() + ".");
 			}
 			return map;
 		}
@@ -79,7 +79,61 @@ public class SerialConnectionEvents {
 		
 		@Override
 		public Version since() {
-			return MSVersion.V3_3_1;
+			return new SimpleVersion(1, 0, 0);
+		}
+	}
+	
+	@api
+	public static class serial_output_buffer_empty extends AbstractEvent {
+		
+		@Override
+		public String getName() {
+			return "serial_output_buffer_empty";
+		}
+		
+		@Override
+		public String docs() {
+			return "{} Fired when the output buffer of a serial connection has become empty"
+					+ " (i.e. all writing operations have finished)."
+					+ " {string serialport: The serial port name} {}";
+		}
+		
+		@Override
+		public BindableEvent convert(CArray manualObject, Target t) {
+			return null;
+		}
+		
+		@Override
+		public Driver driver() {
+			return Driver.EXTENSION;
+		}
+		
+		@Override
+		public Map<String, Mixed> evaluate(BindableEvent event) throws EventException {
+			Map<String, Mixed> map = new TreeMap<>();
+			if(event instanceof SerialOutputBufferEmptyEvent) {
+				SerialOutputBufferEmptyEvent serialOutputBufferEmptyEvent = (SerialOutputBufferEmptyEvent) event;
+				map.put("serialport", new CString(serialOutputBufferEmptyEvent.getSerialPort().getPortName(), null));
+			} else {
+				throw new EventException(
+						"Cannot convert event to " + SerialOutputBufferEmptyEvent.class.getSimpleName() + ".");
+			}
+			return map;
+		}
+		
+		@Override
+		public boolean matches(Map<String, Mixed> prefilter, BindableEvent event) throws PrefilterNonMatchException {
+			return true;
+		}
+		
+		@Override
+		public boolean modifyEvent(String key, Mixed value, BindableEvent event) {
+			return false;
+		}
+		
+		@Override
+		public Version since() {
+			return new SimpleVersion(2, 0, 0);
 		}
 	}
 }
