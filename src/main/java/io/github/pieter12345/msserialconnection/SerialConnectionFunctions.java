@@ -1,11 +1,18 @@
 package io.github.pieter12345.msserialconnection;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
 import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.ArgumentValidation;
+import com.laytonsmith.core.compiler.signature.FunctionSignature;
 import com.laytonsmith.core.compiler.signature.FunctionSignatures;
+import com.laytonsmith.core.compiler.signature.Param;
 import com.laytonsmith.core.compiler.signature.SignatureBuilder;
+import com.laytonsmith.core.compiler.signature.Throws;
 import com.laytonsmith.core.constructs.CArray;
 import com.laytonsmith.core.constructs.CBoolean;
 import com.laytonsmith.core.constructs.CByteArray;
@@ -47,23 +54,13 @@ public class SerialConnectionFunctions {
 	public static class serial_get_ports extends SerialConnectionFunction {
 		
 		@Override
-		public Integer[] numArgs() {
-			return new Integer[]{0};
-		}
-		
-		@Override
 		public String docs() {
 			return "array {} Returns an array containing all serial ports in the system.";
 		}
 		
-		public FunctionSignatures getFunctionSignatures() {
-			return new SignatureBuilder(CArray.TYPE, "An array containing all serial ports in the system.").build();
-		}
-		
-		@SuppressWarnings("unchecked")
 		@Override
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[] {};
+		public FunctionSignatures getSignatures() {
+			return new SignatureBuilder(CArray.TYPE, "An array containing all serial ports in the system.").build();
 		}
 		
 		@Override
@@ -78,11 +75,6 @@ public class SerialConnectionFunctions {
 	
 	@api
 	public static class serial_connect extends SerialConnectionFunction {
-		
-		@Override
-		public Integer[] numArgs() {
-			return new Integer[]{7};
-		}
 		
 		@Override
 		public String docs() {
@@ -100,7 +92,8 @@ public class SerialConnectionFunctions {
 					+ " Throws SerialPortException when the serial connection could not be set up.";
 		}
 		
-		public FunctionSignatures getFunctionSignatures() {
+		@Override
+		public FunctionSignatures getSignatures() {
 			return new SignatureBuilder(CVoid.TYPE)
 					.param(CString.TYPE, "portName", "The serial port identifier.")
 					.param(CInt.TYPE, "baudRate", "The serial connection baud rate.")
@@ -115,13 +108,6 @@ public class SerialConnectionFunctions {
 					.throwsEx(CREIllegalStateException.class, "when the given serial port is not open.")
 					.throwsEx(CRESerialPortException.class, "when the serial connection could not be set up.")
 					.build();
-		}
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[] {
-					CREIllegalArgumentException.class, CREIllegalStateException.class, CRESerialPortException.class};
 		}
 		
 		@Override
@@ -224,11 +210,6 @@ public class SerialConnectionFunctions {
 	public static class serial_is_connected extends SerialConnectionFunction {
 		
 		@Override
-		public Integer[] numArgs() {
-			return new Integer[]{1};
-		}
-		
-		@Override
 		public String docs() {
 			return "boolean {string portName} Returns true if this port was opened by "
 					+ serial_connect.class.getSimpleName() + "(), and not yet closed by "
@@ -237,14 +218,9 @@ public class SerialConnectionFunctions {
 					+ " this function.";
 		}
 		
-		public FunctionSignatures getFunctionSignatures() {
-			return new SignatureBuilder(CBoolean.TYPE, "True if the given serial port is open.").build();
-		}
-		
-		@SuppressWarnings("unchecked")
 		@Override
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[] {};
+		public FunctionSignatures getSignatures() {
+			return new SignatureBuilder(CBoolean.TYPE, "True if the given serial port is open.").build();
 		}
 		
 		@Override
@@ -258,27 +234,17 @@ public class SerialConnectionFunctions {
 	public static class serial_disconnect extends SerialConnectionFunction {
 		
 		@Override
-		public Integer[] numArgs() {
-			return new Integer[]{1};
-		}
-		
-		@Override
 		public String docs() {
 			return "void {string portName} Disconnects the given serial port."
 					+ " Throws IllegalStateException when the given serial port is not open.";
 		}
 		
-		public FunctionSignatures getFunctionSignatures() {
+		@Override
+		public FunctionSignatures getSignatures() {
 			return new SignatureBuilder(CVoid.TYPE)
 					.param(CString.TYPE, "portName", "The serial port identifier.")
 					.throwsEx(CREIllegalStateException.class, "when the given serial port is not open.")
 					.build();
-		}
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[] {CREIllegalStateException.class};
 		}
 		
 		@Override
@@ -305,26 +271,16 @@ public class SerialConnectionFunctions {
 	public static class serial_input_buffer_byte_count extends SerialConnectionFunction {
 		
 		@Override
-		public Integer[] numArgs() {
-			return new Integer[]{1};
-		}
-		
-		@Override
 		public String docs() {
 			return "int {string portName} Returns the number of bytes in the RX (input) buffer.";
 		}
 		
-		public FunctionSignatures getFunctionSignatures() {
+		@Override
+		public FunctionSignatures getSignatures() {
 			return new SignatureBuilder(CInt.TYPE, "The number of bytes in the RX (input) buffer.")
 			.param(CString.TYPE, "portName", "The serial port identifier.")
 			.throwsEx(CREIllegalStateException.class, "when the given serial port is not open.")
 			.build();
-		}
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[] {};
 		}
 		
 		@Override
@@ -352,26 +308,16 @@ public class SerialConnectionFunctions {
 	public static class serial_output_buffer_byte_count extends SerialConnectionFunction {
 		
 		@Override
-		public Integer[] numArgs() {
-			return new Integer[]{1};
-		}
-		
-		@Override
 		public String docs() {
 			return "int {string portName} Returns the number of bytes in the TX (output) buffer.";
 		}
 		
-		public FunctionSignatures getFunctionSignatures() {
+		@Override
+		public FunctionSignatures getSignatures() {
 			return new SignatureBuilder(CInt.TYPE, "The number of bytes in the TX (output) buffer.")
 			.param(CString.TYPE, "portName", "The serial port identifier.")
 			.throwsEx(CREIllegalStateException.class, "when the given serial port is not open.")
 			.build();
-		}
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[] {};
 		}
 		
 		@Override
@@ -399,11 +345,6 @@ public class SerialConnectionFunctions {
 	public static class serial_write_bytes extends SerialConnectionFunction {
 		
 		@Override
-		public Integer[] numArgs() {
-			return new Integer[]{2, 3, 4};
-		}
-		
-		@Override
 		public String docs() {
 			return "void {string serialPort, byte_array data, [int startInd], [int length]}"
 					+ " Writes data to the given serial connection."
@@ -427,12 +368,6 @@ public class SerialConnectionFunctions {
 					.throwsEx(CRERangeException.class, "when startInd and/or startInd + length is out of array bounds.")
 					.throwsEx(CRESerialPortException.class, "when writing the data to the serial port fails.")
 					.build();
-		}
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[] {CREIllegalStateException.class, CRERangeException.class, CRESerialPortException.class};
 		}
 		
 		@Override
@@ -493,11 +428,6 @@ public class SerialConnectionFunctions {
 	public static class serial_read_bytes extends SerialConnectionFunction {
 		
 		@Override
-		public Integer[] numArgs() {
-			return new Integer[]{2, 3};
-		}
-		
-		@Override
 		public String docs() {
 			return "byte_array {string serialPort, int length, [int timeoutMs]}"
 					+ " Reads from the given serial connection."
@@ -520,13 +450,6 @@ public class SerialConnectionFunctions {
 					.throwsEx(CREIllegalStateException.class, "when the given serial port is not open.")
 					.throwsEx(CRESerialPortException.class, "when writing the data to the serial port fails.")
 					.build();
-		}
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[] {
-					CREIllegalArgumentException.class, CREIllegalStateException.class, CRESerialPortException.class};
 		}
 		
 		@Override
@@ -581,9 +504,71 @@ public class SerialConnectionFunctions {
 	
 	public abstract static class SerialConnectionFunction extends AbstractFunction {
 		
+		private Integer[] numArgs = null;
+		private Class<? extends CREThrowable>[] thrown = null;
+		
 		@Override
 		public String getName() {
 			return this.getClass().getSimpleName();
+		}
+		
+		@Override
+		public Integer[] numArgs() {
+			
+			// Return from cache if available.
+			if(this.numArgs != null) {
+				return this.numArgs;
+			}
+			
+			// Get numArgs from function signatures.
+			FunctionSignatures signatures = this.getCachedSignatures();
+			if(signatures == null) {
+				throw new Error("Missing numArgs() or getSignatures() implementation in "
+						+ this.getName() + "().");
+			}
+			Set<Integer> numArgsSet = new TreeSet<>();
+			for(FunctionSignature signature : signatures.getSignatures()) {
+				int numOptionalParams = 0;
+				for(Param param : signature.getParams()) {
+					if(param.isVarParam()) {
+						this.numArgs = new Integer[] {Integer.MAX_VALUE};
+						return this.numArgs;
+					} else if(param.isOptional()) {
+						numOptionalParams++;
+					}
+				}
+				int numParams = signature.getParams().size();
+				for(int paramCount = numParams - numOptionalParams; paramCount <= numParams; paramCount++) {
+					numArgsSet.add(paramCount);
+				}
+			}
+			this.numArgs = numArgsSet.toArray(new Integer[numArgsSet.size()]);
+			return this.numArgs;
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public Class<? extends CREThrowable>[] thrown() {
+			
+			// Return from cache if available.
+			if(this.thrown != null) {
+				return this.thrown;
+			}
+			
+			// Get possibly thrown exceptions from function signatures.
+			FunctionSignatures signatures = this.getCachedSignatures();
+			if(signatures == null) {
+				throw new Error("Missing thrown() or getSignatures() implementation in "
+						+ this.getName() + "().");
+			}
+			Set<Class<? extends CREThrowable>> possibleExceptionClasses = new HashSet<>();
+			for(FunctionSignature signature : signatures.getSignatures()) {
+				for(Throws throwsEx : signature.getThrows()) {
+					possibleExceptionClasses.add(throwsEx.getExceptionClass());
+				}
+			}
+			this.thrown = possibleExceptionClasses.toArray(new Class[possibleExceptionClasses.size()]);
+			return this.thrown;
 		}
 		
 		@Override
