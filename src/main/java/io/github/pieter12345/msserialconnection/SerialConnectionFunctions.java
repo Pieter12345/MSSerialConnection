@@ -485,7 +485,9 @@ public class SerialConnectionFunctions {
 				long lastReceiveTime = System.currentTimeMillis();
 				do {
 					numBytesAvailable = serialPort.getInputBufferBytesCount();
-					if(numBytesAvailable >= length) {
+					if(numBytesAvailable == -1) {
+						throw new CRESerialPortException(serialPort, "Failed to read from serial port.", t);
+					} else if(numBytesAvailable >= length) {
 						break; // Enough data available.
 					} else if(numBytesAvailable != lastNumBytesAvailable) {
 						lastNumBytesAvailable = numBytesAvailable;
