@@ -17,6 +17,7 @@ import com.laytonsmith.core.constructs.CArray;
 import com.laytonsmith.core.constructs.CBoolean;
 import com.laytonsmith.core.constructs.CByteArray;
 import com.laytonsmith.core.constructs.CInt;
+import com.laytonsmith.core.constructs.CNull;
 import com.laytonsmith.core.constructs.CString;
 import com.laytonsmith.core.constructs.CVoid;
 import com.laytonsmith.core.constructs.Target;
@@ -55,7 +56,9 @@ public class SerialConnectionFunctions {
 		
 		@Override
 		public String docs() {
-			return "array {} Returns an array containing all serial ports in the system.";
+			return "array {} Returns an array containing all serial ports in the system."
+					+ " Returns null when serial port data could not be obtained due to a recently disconnected"
+					+ " device.";
 		}
 		
 		@Override
@@ -66,8 +69,13 @@ public class SerialConnectionFunctions {
 		@Override
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
 			CArray ret = new CArray(t);
-			for(String portName : SerialPortList.getPortNames()) {
-				ret.push(new CString(portName, t), t);
+			try {
+				for(String portName : SerialPortList.getPortNames()) {
+					ret.push(new CString(portName, t), t);
+				}
+			} catch (NullPointerException e) {
+				// SerialPortList.getPortNames() has caused an internal exception due to a just-removed serial device.
+				return CNull.NULL;
 			}
 			return ret;
 		}
