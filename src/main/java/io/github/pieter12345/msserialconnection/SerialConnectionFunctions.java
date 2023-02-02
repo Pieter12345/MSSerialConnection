@@ -448,7 +448,7 @@ public class SerialConnectionFunctions {
 							+ " -1 indicates no timeout. Defaults to -1.", true)
 					.throwsEx(CREIllegalArgumentException.class, "when length < 0 or timeoutMs < -1.")
 					.throwsEx(CREIllegalStateException.class, "when the given serial port is not open.")
-					.throwsEx(CRESerialPortException.class, "when writing the data to the serial port fails.")
+					.throwsEx(CRESerialPortException.class, "when reading the data from the serial port fails.")
 					.build();
 		}
 		
