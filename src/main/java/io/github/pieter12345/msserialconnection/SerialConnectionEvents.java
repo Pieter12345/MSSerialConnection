@@ -10,8 +10,7 @@ import com.laytonsmith.core.constructs.CArray;
 import com.laytonsmith.core.constructs.CInt;
 import com.laytonsmith.core.constructs.CString;
 import com.laytonsmith.core.constructs.Target;
-import com.laytonsmith.core.events.AbstractEvent;
-import com.laytonsmith.core.events.BindableEvent;
+import com.laytonsmith.core.events.AbstractGenericEvent;
 import com.laytonsmith.core.events.Driver;
 import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
@@ -30,7 +29,7 @@ public class SerialConnectionEvents {
 	}
 	
 	@api
-	public static class serial_data_available extends AbstractEvent {
+	public static class serial_data_available extends AbstractGenericEvent<SerialDataAvailableEvent> {
 		
 		@Override
 		public String getName() {
@@ -45,7 +44,7 @@ public class SerialConnectionEvents {
 		}
 		
 		@Override
-		public BindableEvent convert(CArray manualObject, Target t) {
+		public SerialDataAvailableEvent convert(CArray manualObject, Target t) {
 			return null;
 		}
 		
@@ -55,26 +54,21 @@ public class SerialConnectionEvents {
 		}
 		
 		@Override
-		public Map<String, Mixed> evaluate(BindableEvent event) throws EventException {
+		public Map<String, Mixed> evaluate(SerialDataAvailableEvent event) throws EventException {
 			Map<String, Mixed> map = new TreeMap<>();
-			if(event instanceof SerialDataAvailableEvent) {
-				SerialDataAvailableEvent serialDataReceivedEvent = (SerialDataAvailableEvent) event;
-				map.put("serialport", new CString(serialDataReceivedEvent.getSerialPort().getPortName(), null));
-				map.put("rxBufferByteCount", new CInt(serialDataReceivedEvent.getRXBufferByteCount(), null));
-			} else {
-				throw new EventException(
-						"Cannot convert event to " + SerialDataAvailableEvent.class.getSimpleName() + ".");
-			}
+			map.put("serialport", new CString(event.getSerialPort().getPortName(), null));
+			map.put("rxBufferByteCount", new CInt(event.getRXBufferByteCount(), null));
 			return map;
 		}
 		
 		@Override
-		public boolean matches(Map<String, Mixed> prefilter, BindableEvent event) throws PrefilterNonMatchException {
+		public boolean matches(Map<String, Mixed> prefilter, SerialDataAvailableEvent event)
+				throws PrefilterNonMatchException {
 			return true;
 		}
 		
 		@Override
-		public boolean modifyEvent(String key, Mixed value, BindableEvent event) {
+		public boolean modifyEvent(String key, Mixed value, SerialDataAvailableEvent event) {
 			return false;
 		}
 		
@@ -85,7 +79,7 @@ public class SerialConnectionEvents {
 	}
 	
 	@api
-	public static class serial_output_buffer_empty extends AbstractEvent {
+	public static class serial_output_buffer_empty extends AbstractGenericEvent<SerialOutputBufferEmptyEvent> {
 		
 		@Override
 		public String getName() {
@@ -100,7 +94,7 @@ public class SerialConnectionEvents {
 		}
 		
 		@Override
-		public BindableEvent convert(CArray manualObject, Target t) {
+		public SerialOutputBufferEmptyEvent convert(CArray manualObject, Target t) {
 			return null;
 		}
 		
@@ -110,25 +104,20 @@ public class SerialConnectionEvents {
 		}
 		
 		@Override
-		public Map<String, Mixed> evaluate(BindableEvent event) throws EventException {
+		public Map<String, Mixed> evaluate(SerialOutputBufferEmptyEvent event) throws EventException {
 			Map<String, Mixed> map = new TreeMap<>();
-			if(event instanceof SerialOutputBufferEmptyEvent) {
-				SerialOutputBufferEmptyEvent serialOutputBufferEmptyEvent = (SerialOutputBufferEmptyEvent) event;
-				map.put("serialport", new CString(serialOutputBufferEmptyEvent.getSerialPort().getPortName(), null));
-			} else {
-				throw new EventException(
-						"Cannot convert event to " + SerialOutputBufferEmptyEvent.class.getSimpleName() + ".");
-			}
+			map.put("serialport", new CString(event.getSerialPort().getPortName(), null));
 			return map;
 		}
 		
 		@Override
-		public boolean matches(Map<String, Mixed> prefilter, BindableEvent event) throws PrefilterNonMatchException {
+		public boolean matches(Map<String, Mixed> prefilter, SerialOutputBufferEmptyEvent event)
+				throws PrefilterNonMatchException {
 			return true;
 		}
 		
 		@Override
-		public boolean modifyEvent(String key, Mixed value, BindableEvent event) {
+		public boolean modifyEvent(String key, Mixed value, SerialOutputBufferEmptyEvent event) {
 			return false;
 		}
 		
