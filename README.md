@@ -39,7 +39,7 @@ Fired when data is received through a serial connection.
 
 #### Event Data
 **string serialport**: The serial port name  
-**byte_array data**: The raw received data
+**int rxBufferByteCount**: The number of bytes available for reading
 #### Mutable Fields
 
 ### serial\_output\_buffer\_empty

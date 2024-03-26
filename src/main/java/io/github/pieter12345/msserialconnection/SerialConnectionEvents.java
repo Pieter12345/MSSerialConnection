@@ -40,7 +40,8 @@ public class SerialConnectionEvents {
 		@Override
 		public String docs() {
 			return "{} Fired when data is received through a serial connection."
-					+ " {string serialport: The serial port name | byte_array data: The raw received data} {}";
+					+ " {string serialport: The serial port name"
+					+ " | int rxBufferByteCount: The number of bytes available for reading} {}";
 		}
 		
 		@Override
