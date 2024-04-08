@@ -228,7 +228,9 @@ public class SerialConnectionFunctions {
 		
 		@Override
 		public FunctionSignatures getSignatures() {
-			return new SignatureBuilder(CBoolean.TYPE, "True if the given serial port is open.").build();
+			return new SignatureBuilder(CBoolean.TYPE, "True if the given serial port is open.")
+					.param(CString.TYPE, "portName", "The serial port identifier.")
+					.build();
 		}
 		
 		@Override
